@@ -1,25 +1,54 @@
-public class UseCase11PalindromeCheckerApp {
-    public static void main(String[] args) {
-        PalindromeService service = new PalindromeService();
-        String input = "radar";
-        boolean isPalindrome = service.checkPalindrome(input);
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+import java.util.Stack;
+import java.util.Deque;
+import java.util.ArrayDeque;
+
+interface PalindromeStrategy {
+    boolean check(String input);
+}
+
+class StackStrategy implements PalindromeStrategy {
+    public boolean check(String input) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
-class PalindromeService {
-    public boolean checkPalindrome(String input) {
-        int start = 0;
-        int end = input.length() - 1;
+class DequeStrategy implements PalindromeStrategy {
+    public boolean check(String input) {
+        Deque<Character> deque = new ArrayDeque<>();
 
-        while (start < end) {
-            if (input.charAt(start) != input.charAt(end)) {
+        for (char c : input.toCharArray()) {
+            deque.addLast(c);
+        }
+
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
                 return false;
             }
-            start++;
-            end--;
         }
         return true;
+    }
+}
+
+public class UseCase12PalindromeCheckerApp {
+    public static void main(String[] args) {
+        String input = "level";
+
+        PalindromeStrategy strategy = new StackStrategy();
+
+        boolean isPalindrome = strategy.check(input);
+
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
