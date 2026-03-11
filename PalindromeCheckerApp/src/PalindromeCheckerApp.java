@@ -1,54 +1,28 @@
-import java.util.Stack;
-import java.util.Deque;
-import java.util.ArrayDeque;
-
-interface PalindromeStrategy {
-    boolean check(String input);
-}
-
-class StackStrategy implements PalindromeStrategy {
-    public boolean check(String input) {
-        Stack<Character> stack = new Stack<>();
-
-        for (char c : input.toCharArray()) {
-            stack.push(c);
-        }
-
-        for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
-                return false;
-            }
-        }
-        return true;
-    }
-}
-
-class DequeStrategy implements PalindromeStrategy {
-    public boolean check(String input) {
-        Deque<Character> deque = new ArrayDeque<>();
-
-        for (char c : input.toCharArray()) {
-            deque.addLast(c);
-        }
-
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                return false;
-            }
-        }
-        return true;
-    }
-}
-
-public class UseCase12PalindromeCheckerApp {
+public class UseCase13PalindromeCheckerApp {
     public static void main(String[] args) {
         String input = "level";
 
-        PalindromeStrategy strategy = new StackStrategy();
-
-        boolean isPalindrome = strategy.check(input);
+        long startTime = System.nanoTime();
+        boolean result1 = isPalindromeTwoPointer(input);
+        long endTime = System.nanoTime();
+        long executionTime1 = endTime - startTime;
 
         System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Is Palindrome? : " + result1);
+        System.out.println("Execution Time : " + executionTime1 + " ns");
+    }
+
+    private static boolean isPalindromeTwoPointer(String s) {
+        int start = 0;
+        int end = s.length() - 1;
+
+        while (start < end) {
+            if (s.charAt(start) != s.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
     }
 }
