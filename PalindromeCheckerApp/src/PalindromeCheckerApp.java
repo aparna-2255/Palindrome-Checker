@@ -1,14 +1,16 @@
-public class UseCase2PalindromeCheckerApp {
+public class UseCase3PalindromeCheckerApp {
     public static void main(String[] args) {
-        String str = "madam";
-        String reverse = "";
-        for (int i = str.length() - 1; i >= 0; i--) {
-            reverse += str.charAt(i);
+        String input = "madam";
+        String reversed = "";
+
+        for (int i = input.length() - 1; i >= 0; i--) {
+            reversed += input.charAt(i);
         }
-        if (str.equals(reverse)) {
-            System.out.println("The string \"" + str + "\" is a palindrome.");
+
+        if (input.equals(reversed)) {
+            System.out.println("The string \"" + input + "\" is a palindrome.");
         } else {
-            System.out.println("The string \"" + str + "\" is not a palindrome.");
+            System.out.println("The string \"" + input + "\" is not a palindrome.");
         }
     }
 }
